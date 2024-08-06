@@ -1,5 +1,5 @@
 resource "yandex_compute_instance_group" "minions-group" {
-  depends_on = [yandex_compute_instance.master-vm]
+  depends_on = [yandex_compute_instance.master-vm, yandex_resourcemanager_folder_iam_binding.paulmd-sa-admin]
 
   name = "minions-group"
   service_account_id = yandex_iam_service_account.paulmd-sa.id

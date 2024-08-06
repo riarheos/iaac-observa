@@ -1,5 +1,5 @@
 resource "yandex_compute_disk" "ansible-disk" {
-  name     = "master-disk"
+  name     = "ansible-disk"
   type     = "network-hdd"
   zone     = var.zone
   size     = "20"

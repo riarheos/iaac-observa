@@ -1,0 +1,27 @@
+#cloud-config
+users:
+  - name:   paulus
+    groups: sudo
+    shell:  /bin/bash
+    sudo:   'ALL=(ALL) NOPASSWD:ALL'
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/6eGcMdP3SilqR3h2j+Tjvi5OUIafEzvMebHhSquBt/PfUFRpz6PSr3SnnnHRk2PPbjVAE4H79byS5wv+ANELkT9xLYuS6nnttly17BrHj3p1J45m2F3ULNhUtP7JNMd9pdmXmPFhf76wis8vSgLuDBIlyiXLhqM0/jubXkwPhaUGjFtTjg98jcPIOaIcOSRT4Abo/GJRRiusDcgZpUG2WES77eEzsfRCsJPbkWxim9KiOsEd27ROJ3HXFx4g4W7mfy5XgH7dA0rOIu26EmOinqdlRAjrBK2eIuW65lQ/5DjCoGJmyIBf7yVX8RnYwF9hvWPf5bO1qQT03FFitFbz # Skotty key legacy on yubikey
+
+apt:
+  preserve_sources_list: true
+  sources:
+    salt-repo:
+      source: deb [signed-by=$KEY_FILE] https://repo.saltproject.io/salt/py3/ubuntu/22.04/amd64/3007 jammy main
+      keyid: 10857FFDD3F91EAE577A21D664CBBC8173D76B3F
+
+package_update: true
+packages:
+  - salt-master
+
+write_files:
+  - content: |
+      auto_accept: True
+    path: /etc/salt/master.d/tune.conf
+
+runcmd:
+  - [service, salt-master, start]

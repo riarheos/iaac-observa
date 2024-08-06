@@ -4,7 +4,7 @@ resource "yandex_compute_instance_group" "minions-group" {
     yandex_resourcemanager_folder_iam_binding.paulmd-sa-admin
   ]
 
-  name = "minions-group"
+  name               = "minions-group"
   service_account_id = yandex_iam_service_account.paulmd-sa.id
 
   allocation_policy {
@@ -18,7 +18,7 @@ resource "yandex_compute_instance_group" "minions-group" {
 
   scale_policy {
     fixed_scale {
-      size = 2
+      size = 1
     }
   }
 
@@ -26,8 +26,8 @@ resource "yandex_compute_instance_group" "minions-group" {
     name = "minion-{instance.short_id}"
 
     resources {
-      cores  = 2
-      memory = 1
+      cores         = 2
+      memory        = 1
       core_fraction = 5
     }
 
@@ -37,14 +37,14 @@ resource "yandex_compute_instance_group" "minions-group" {
 
     boot_disk {
       initialize_params {
-        size = 20
+        size     = 20
         image_id = local.image
       }
     }
 
     network_interface {
       subnet_ids = [yandex_vpc_subnet.subnet-a.id]
-      nat = true
+      nat        = true
     }
 
     metadata = {

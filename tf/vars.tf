@@ -1,5 +1,6 @@
 locals {
-  image = "fd84kp940dsrccckilj6"
+  image  = "fd84kp940dsrccckilj6"
+  folder = "b1guaa1hv85esfel63i6"
 }
 
 variable "zone" {

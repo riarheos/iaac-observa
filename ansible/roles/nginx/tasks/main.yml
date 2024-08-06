@@ -1,0 +1,13 @@
+- name: Install nginx
+  ansible.builtin.package:
+    name: nginx
+
+- name: Copy the whale image
+  ansible.builtin.copy:
+    src: static/whale.svg
+    dest: /var/www/html/whale.svg
+
+- name: Create an index image
+  ansible.builtin.template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html

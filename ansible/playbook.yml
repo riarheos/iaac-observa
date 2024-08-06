@@ -1,0 +1,4 @@
+- name: Apply roles to cloud host
+  hosts: all
+  roles:
+    - nginx

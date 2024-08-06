@@ -1,4 +1,4 @@
-resource "yandex_compute_disk" "master-disk" {
+resource "yandex_compute_disk" "ansible-disk" {
   name     = "master-disk"
   type     = "network-hdd"
   zone     = var.zone
@@ -6,8 +6,8 @@ resource "yandex_compute_disk" "master-disk" {
   image_id = local.image
 }
 
-resource "yandex_compute_instance" "master-vm" {
-  name = "master-vm"
+resource "yandex_compute_instance" "ansible-vm" {
+  name = "ansible-vm"
 
   resources {
     cores         = 2
@@ -16,7 +16,7 @@ resource "yandex_compute_instance" "master-vm" {
   }
 
   boot_disk {
-    disk_id = yandex_compute_disk.master-disk.id
+    disk_id = yandex_compute_disk.ansible-disk.id
   }
 
   network_interface {
@@ -24,7 +24,11 @@ resource "yandex_compute_instance" "master-vm" {
     nat       = true
   }
 
+  labels = {
+    node_type = "ansible"
+  }
+
   metadata = {
-    user-data = file("cloud-init.yaml")
+    user-data = file("../ansible/cloud-init.yaml")
   }
 }

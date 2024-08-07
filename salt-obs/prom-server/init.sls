@@ -1,11 +1,11 @@
-packages:
+prometheus-pkg:
   pkg.installed:
     - pkgs:
         - prometheus
 
 /etc/prometheus/prometheus.yml:
   file.managed:
-    - source: salt://{{ slspath }}/files/prometheus.yml.j2
+    - source: salt://{{ slspath }}/prometheus.yml.j2
       template: jinja
 
 prometheus:

@@ -8,4 +8,5 @@ base:
 
   'role:mgmt':
     - match: grain
-    - mgmt
+    - prom-server
+    - grafana

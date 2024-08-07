@@ -11,9 +11,9 @@ resource "yandex_compute_instance" "ansible-vm" {
   hostname = "ansible"
 
   resources {
-    cores         = 2
-    memory        = 2
-#     core_fraction = 5
+    cores  = 2
+    memory = 2
+    #     core_fraction = 5
   }
 
   boot_disk {

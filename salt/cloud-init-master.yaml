@@ -19,12 +19,23 @@ packages:
   - salt-master
 
 write_files:
-  - content: |
+  - path: /etc/salt/master.d/tune.conf
+    content: |
       auto_accept: true
+      
       file_roots:
         base:
           - /srv/salt
-    path: /etc/salt/master.d/tune.conf
+
+      pillar_roots:
+        base:
+          - /srv/pillar
+
+      ext_pillar:
+        - yacloud: ''
+
+      module_dirs:
+        - /srv/master-modules   
 
 runcmd:
   - [wget, -r, -np, -nH, --cut-dirs=1, -P, /srv/salt, http://ansible/salt]

@@ -11,8 +11,9 @@ resource "yandex_compute_disk" "salt-disk" {
 resource "yandex_compute_instance" "salt-vm" {
   depends_on = [yandex_compute_disk.salt-disk[0]]
 
-  name     = "salt-vm"
-  hostname = "salt"
+  name               = "salt-vm"
+  hostname           = "salt"
+  service_account_id = yandex_iam_service_account.paulmd-sa.id
 
   resources {
     cores  = 2
@@ -74,9 +75,9 @@ resource "yandex_compute_instance_group" "minions-group" {
     name = "minion-{instance.short_id}"
 
     resources {
-      cores         = 2
-      memory        = 2
-#       core_fraction = 20
+      cores  = 2
+      memory = 2
+      #       core_fraction = 20
     }
 
     scheduling_policy {
@@ -111,8 +112,8 @@ resource "yandex_lb_network_load_balancer" "minions-lb" {
   name = "minions-lb"
 
   listener {
-    name = "minions-listener"
-    port = 80
+    name        = "minions-listener"
+    port        = 80
     target_port = 80
     external_address_spec {
       ip_version = "ipv4"

@@ -48,8 +48,6 @@ resource "yandex_compute_instance_group" "minions-group" {
     yandex_resourcemanager_folder_iam_binding.paulmd-sa-admin
   ]
 
-  count = var.create_minions
-
   name               = "minions-group"
   service_account_id = yandex_iam_service_account.paulmd-sa.id
 
@@ -68,13 +66,17 @@ resource "yandex_compute_instance_group" "minions-group" {
     }
   }
 
+  load_balancer {
+    target_group_name = "minions-target-group"
+  }
+
   instance_template {
     name = "minion-{instance.short_id}"
 
     resources {
       cores         = 2
       memory        = 2
-      core_fraction = 20
+#       core_fraction = 20
     }
 
     scheduling_policy {
@@ -101,4 +103,32 @@ resource "yandex_compute_instance_group" "minions-group" {
       user-data = file("../salt/cloud-init-minion.yaml")
     }
   }
+
+  count = var.create_minions
+}
+
+resource "yandex_lb_network_load_balancer" "minions-lb" {
+  name = "minions-lb"
+
+  listener {
+    name = "minions-listener"
+    port = 80
+    target_port = 80
+    external_address_spec {
+      ip_version = "ipv4"
+    }
+  }
+
+  attached_target_group {
+    target_group_id = yandex_compute_instance_group.minions-group[0].load_balancer[0].target_group_id
+
+    healthcheck {
+      name = "tcp"
+      tcp_options {
+        port = 80
+      }
+    }
+  }
+
+  count = var.create_minions
 }

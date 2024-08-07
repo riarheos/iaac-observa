@@ -22,5 +22,5 @@ scrape_configs:
     static_configs:
       - targets:
         - '{{ host['fqdn'] }}:9100'
-        - '{{ host['fqdn'] }}:9113'
+        - '{{ host['fqdn'] }}:8080'
 {% endfor %}

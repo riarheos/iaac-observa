@@ -1,8 +1,11 @@
+/root/nginx.deb:
+  file.managed:
+    - source: salt://{{ slspath }}/files/nginx-core_1.18.0-6ubuntu14.4_amd64.deb
+
 packages:
   pkg.installed:
-    - pkgs:
-        - nginx
-        - prometheus-nginx-exporter
+    - sources:
+        - nginx-core: /root/nginx.deb
 
 /etc/nginx/sites-enabled/default:
   file.managed:
@@ -22,6 +25,3 @@ nginx:
     - reload: true
     - watch:
         - file: /etc/nginx/sites-enabled/default
-
-prometheus-nginx-exporter:
-  service.running

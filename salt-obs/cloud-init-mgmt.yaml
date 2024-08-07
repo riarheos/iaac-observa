@@ -18,7 +18,7 @@ package_update: true
 
 salt_minion:
   grains:
-    role: [prom-server]
+    role: [mgmt]
 
 runcmd:
   - [salt-call, state.highstate]

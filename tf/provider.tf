@@ -8,5 +8,5 @@ terraform {
 }
 
 provider "yandex" {
-  zone = var.zone
+  zone = local.zone
 }

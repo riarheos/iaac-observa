@@ -1,11 +1,11 @@
 resource "yandex_compute_disk" "salt-disk" {
   name     = "salt-disk"
   type     = "network-hdd"
-  zone     = var.zone
+  zone     = local.zone
   size     = "20"
   image_id = local.image
 
-  count = local.create_salt
+  count = var.create_salt
 }
 
 resource "yandex_compute_instance" "salt-vm" {
@@ -39,7 +39,7 @@ resource "yandex_compute_instance" "salt-vm" {
 
   allow_stopping_for_update = true
 
-  count = local.create_salt
+  count = var.create_salt
 }
 
 resource "yandex_compute_instance_group" "minions-group" {
@@ -48,13 +48,13 @@ resource "yandex_compute_instance_group" "minions-group" {
     yandex_resourcemanager_folder_iam_binding.paulmd-sa-admin
   ]
 
-  count = local.create_minions
+  count = var.create_minions
 
   name               = "minions-group"
   service_account_id = yandex_iam_service_account.paulmd-sa.id
 
   allocation_policy {
-    zones = [var.zone]
+    zones = [local.zone]
   }
 
   deploy_policy {

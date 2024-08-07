@@ -1,7 +1,7 @@
 resource "yandex_compute_disk" "ansible-disk" {
   name     = "ansible-disk"
   type     = "network-hdd"
-  zone     = var.zone
+  zone     = local.zone
   size     = "20"
   image_id = local.image
 }

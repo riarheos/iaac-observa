@@ -1,5 +1,8 @@
-nginx:
-  pkg.installed
+packages:
+  pkg.installed:
+    - pkgs:
+        - nginx
+        - prometheus-nginx-exporter
 
 /etc/nginx/sites-enabled/default:
   file.managed:
@@ -14,9 +17,11 @@ nginx:
     - source: salt://{{ slspath }}/files/index.html.j2
       template: jinja
 
-nginx_service:
+nginx:
   service.running:
-    - name: nginx
     - reload: true
     - watch:
         - file: /etc/nginx/sites-enabled/default
+
+prometheus-nginx-exporter:
+  service.running

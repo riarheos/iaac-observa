@@ -16,3 +16,9 @@ variable "create_minions" {
   type        = number
   default     = 0
 }
+
+variable "create_mgmt" {
+  description = "Set to 1 to create the management vm"
+  type        = number
+  default     = 0
+}

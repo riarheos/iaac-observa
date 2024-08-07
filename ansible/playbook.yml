@@ -1,4 +1,4 @@
 - name: Apply roles to cloud host
-  hosts: all
+  hosts: ansible
   roles:
     - nginx

@@ -7,7 +7,8 @@ resource "yandex_compute_disk" "ansible-disk" {
 }
 
 resource "yandex_compute_instance" "ansible-vm" {
-  name = "ansible-vm"
+  name     = "ansible-vm"
+  hostname = "ansible"
 
   resources {
     cores         = 2

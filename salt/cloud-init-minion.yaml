@@ -19,4 +19,4 @@ packages:
   - salt-minion
 
 runcmd:
-  - [service, salt-minion, start]
+  - [salt-call, state.highstate]

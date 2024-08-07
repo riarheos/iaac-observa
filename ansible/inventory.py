@@ -11,7 +11,7 @@ hosts = json.loads(data)
 result = {}
 hostvars = {}
 for host in hosts:
-    group = host['labels']['node_type']
+    group = host['labels']['node_type'].replace('-', '_')
     if group not in result:
         result[group] = {
             'hosts': [],

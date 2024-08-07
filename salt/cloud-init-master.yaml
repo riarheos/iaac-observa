@@ -20,8 +20,12 @@ packages:
 
 write_files:
   - content: |
-      auto_accept: True
+      auto_accept: true
+      file_roots:
+        base:
+          - /srv/salt
     path: /etc/salt/master.d/tune.conf
 
 runcmd:
+  - [wget, -r, -np, -nH, --cut-dirs=1, -P, /srv/salt, http://ansible/salt]
   - [service, salt-master, start]

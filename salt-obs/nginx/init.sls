@@ -20,8 +20,22 @@ packages:
     - source: salt://{{ slspath }}/files/index.html.j2
       template: jinja
 
+/usr/bin/worker:
+  file.managed:
+    - source: salt://{{ slspath }}/files/worker
+      mode: 755
+
+/etc/systemd/system/worker.service:
+  file.managed:
+    - source: salt://{{ slspath }}/files/worker.service
+
 nginx:
   service.running:
     - reload: true
     - watch:
         - file: /etc/nginx/sites-enabled/default
+
+worker:
+  service.running:
+    - enable: true
+    - reload: true

@@ -1,0 +1,12 @@
+[Unit]
+Description=Runs the demo worker
+
+[Service]
+User=root
+WorkingDirectory=/
+ExecStart=/usr/bin/worker
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

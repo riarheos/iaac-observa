@@ -15,8 +15,8 @@ resource "yandex_compute_instance" "mgmt-vm" {
   hostname = "mgmt"
 
   resources {
-    cores  = 2
-    memory = 2
+    cores  = 4
+    memory = 4
     #     core_fraction = 5
   }
 

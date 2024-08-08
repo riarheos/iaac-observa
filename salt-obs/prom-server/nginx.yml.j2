@@ -1,0 +1,8 @@
+groups:
+  - name: web
+    rules:
+      - alert: nginx
+        expr: sum(nginx_vts_info) < {{ pillar['yacloud']['salt-minion'] | length }}
+        annotations:
+          failure: "Nginx не работает"
+          success: "Nginx заработал"

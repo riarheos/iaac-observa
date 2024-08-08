@@ -7,7 +7,17 @@ grafana-pkg:
   file.managed:
     - source: salt://{{ slspath }}/prometheus.yaml
 
+/etc/grafana/provisioning/dashboards/nginx.json:
+  file.managed:
+    - source: salt://{{ slspath }}/nginx.json
+
+/etc/grafana/provisioning/dashboards/default.yaml:
+  file.managed:
+    - source: salt://{{ slspath }}/default.yaml
+
 grafana-server:
   service.running:
     - watch:
         - file: /etc/grafana/provisioning/datasources/prometheus.yaml
+        - file: /etc/grafana/provisioning/dashboards/nginx.json
+        - file: /etc/grafana/provisioning/dashboards/default.yaml

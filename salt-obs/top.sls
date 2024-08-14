@@ -10,4 +10,3 @@ base:
     - match: grain
     - prom-server
     - grafana
-    - elastic
